@@ -1,0 +1,30 @@
+{
+  "name": "triton",
+  "version": "0.1.0",
+  "description": "A RESTful API for recording, retrieving and analyzing water level data from water level sensors",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "angular": "^1.4.7",
+    "angular-animate": "^1.4.7",
+    "angular-aria": "^1.4.7",
+    "angular-loading-bar": "^0.8.0",
+    "angular-material": "^0.11.4",
+    "angular-ui-router": "^0.2.15",
+    "bcrypt-nodejs": "0.0.3",
+    "body-parser": "^1.14.1",
+    "express": "^4.13.3",
+    "jsonwebtoken": "^5.4.1",
+    "mongoose": "^4.4.12"
+  },
+  "keywords": [
+    "API",
+    "water",
+    "level",
+    "sensor"
+  ],
+  "author": "Vincent Fiestada",
+  "license": "MIT"
+}
