@@ -13,6 +13,11 @@ var name_regexp = /^[a-z]([a-z0-9_\.])*$/i;
 // set up a mongoose model and pass it using module.exports
 module.exports = mongoose.model("Device", new Schema(
 {
+	"owner": 
+	{
+		"type": Schema.Types.ObjectId,
+		"required": true,
+	},
 	"nickname": 
 	{
 		"type": String,

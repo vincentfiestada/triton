@@ -12,7 +12,7 @@ var triton = express();
 /*
  * Middleware
  */
-biodb.use("/api", api);
+triton.use("/api", api);
 
 /*
  * Start server

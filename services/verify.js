@@ -16,7 +16,7 @@ module.exports = function(req, res, next) // Export this middleware so it can be
 	if (token) // Verify the token
 	{
 		// verifies secret and checks expiration date
-		jwt.verify(token, process.env.tokenKey || "Amphitrite", function(err, decoded)
+		jwt.verify(token, process.env.trident || "Riptide!", function(err, decoded)
 		{
 			if (err || !decoded) // Verification not successful
 			{
@@ -32,6 +32,6 @@ module.exports = function(req, res, next) // Export this middleware so it can be
 	}
 	else // if there is no token
 	{
-		errors.sendQuiet(res, 401, "ERR_TOKEN_NIL");
+		errors.sendQuiet(res, 400, "ERR_TOKEN_NIL");
 	}
 };

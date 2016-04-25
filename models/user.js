@@ -21,8 +21,8 @@ module.exports = mongoose.model("User", new Schema(
 	"username": 
 	{ 
 		"type": String, 
-		"required": true, 
-		"unique": true, 
+		"required": [true, "Username is required"], 
+		"unique": [true, "That username is already taken"], 
 		"trim": true, 
 		"match": [ username_regexp, "Username can only contain alphanumeric characters, '_' or '.' and must begin with a letter"] 
 	},
@@ -36,12 +36,11 @@ module.exports = mongoose.model("User", new Schema(
 	"email": 
 	{ 
 		"type": String, 
-		"required": true, 
-		"unique": true, 
+		"required": [true, "A valid email address is required"], 
+		"unique": [true, "That email is already taken"], 
 		"trim": true, 
 		"lowercase": true, 
 		"match": [ email_regexp, "The email you provided was invalid." ] 
 	},
-	"lastLoginAttempt": Date,
 	"devices": [Device]
 }));

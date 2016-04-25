@@ -2,22 +2,14 @@
  * api.js - Middleware for API routes
  */
 var express = require("express");
-var errors = require("../services/errors");
-var verify = require("../services/verify");
+var login = require("./login");
+var user = require("./user");
+var device = require("./device");
 
 var api = express.Router();
 
-api.post("/login", function(req, res)
-{
-	
-});
-
-// From here on, routes require an auth token
-api.use(verify);
-
-api.post("/level", function(req, res)
-{
-	
-});
+api.use("/login", login);
+api.use("/user", user);
+api.use("/device", device);
 
 module.exports = api;
