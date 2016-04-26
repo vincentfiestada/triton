@@ -1,0 +1,52 @@
+<!-- image_input.html -- Template for bioImageInput directive -->
+<md-list-item class="file-card md-whiteframe-6dp" 
+				layout="column" layout-align="start stretch">
+	<div ng-hide="isNew" style="background-image: url(api/file/{{ image.fileId }})" class="thumbnail"
+			layout="row" layout-align="center end">
+		<md-button class="md-icon-button md-raised" 
+					data-ng-href="api/file/{{ image.fileId }}"
+					target="__blank">
+			<ng-md-icon icon="open_in_new"></ng-md-icon>
+			<md-tooltip>View full size</md-tooltip>
+		</md-button>
+		<md-button class="md-icon-button md-raised md-warn" 
+					ng-click="deleteFile(image.fileId, 'image')">
+			<ng-md-icon icon="delete"></ng-md-icon>
+			<md-tooltip>Delete this image</md-tooltip>
+		</md-button>
+	</div>
+	<div ng-show="isNew" ngf-background="image" class="thumbnail"
+			layout="row" layout-align="center end">
+	</div>
+	<div class="md-list-item-text file-meta">
+		<md-input-container>
+			<label>View Metadata</label>
+			<input required type="text" data-ng-model="info.view" />
+		</md-input-container>
+		<md-input-container>
+			<label>Caption</label>
+			<input type="text" data-ng-model="info.caption" />
+		</md-input-container>
+		<md-input-container>
+			<label>Copyright holder</label>
+			<input type="text" data-ng-model="info.copyright.holder" />
+		</md-input-container>
+		<md-input-container>
+			<label>Copyright year</label>
+			<input type="number" min="0" step="1" data-ng-model="info.copyright.year" />
+		</md-input-container>
+		<md-input-container>
+			<label>License: </label>
+			<md-select required data-ng-model="info.copyright.license" placeholder="License to use for this file">
+				<md-option value="c">All rights reserved</md-option>
+				<md-option value="nrr">Public domain</md-option>
+				<md-option value="by">CreativeCommons - Attribution</md-option>
+				<md-option value="by-sa">CreativeCommons - Attribution Share-Alike</md-option>
+				<md-option value="by-nd">CreativeCommons - Attribution No Derivatives</md-option>
+				<md-option value="by-nc">CreativeCommons - Attribution Non-Commercial</md-option>
+				<md-option value="by-nc-sa">CreativeCommons - Attribution Non-Commercial Share-Alike</md-option>
+				<md-option value="by-nc-nd">CreativeCommons - Attribution Non-Commercial No Derivatives</md-option>
+			</md-select>
+		</md-input-container>
+	</div>
+</md-list-item>

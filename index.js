@@ -9,11 +9,15 @@ var constants = require("./constants");
 
 var triton = express();
 
-/*
- * Middleware
- */
+// <<< Middleware >>>
 triton.use("/api", api);
-
+// <<< Some static file routes >>>
+triton.use("/p", express.static("public"));
+triton.use("/n", express.static("node_modules"));
+triton.get("/", function(req, res) // Application home page
+{
+	res.sendFile("public/index.html", constants.STATIC_SEND_OPTS);
+});
 /*
  * Start server
  */

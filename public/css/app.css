@@ -1,0 +1,380 @@
+/*
+ * app.css - General CSS rules that apply to the entire app
+ */
+
+/*
+ * General stylings
+ */
+body, body > div[ui-view]
+{
+	background: #1565C0;
+}
+*, input
+{
+	font-family: sans-serif;
+}
+p, i, input, textarea
+{
+	font-size: 16px;
+}
+.md-toolbar-tools h1
+{
+	font-size: 30px;
+}
+h3
+{
+	font-size: 24px;
+}
+header > *
+{
+	padding-top: 15px;
+}
+em
+{
+	font-style: normal;
+	font-weight: bolder;
+}
+i
+{
+	font-style: italic;
+	font-weight: normal;
+}
+md-icon
+{
+	margin-left: 5px;
+	margin-right: 5px;
+}
+.logo, .logo48
+{
+    height: 48px;
+    margin: 8px;
+}
+.logo128
+{
+    height: 128px;
+    width: 128px;
+    margin: 8px;
+}
+.note
+{
+	font-style: italic;
+	color: darkslategrey;
+}
+/*
+ * Front page banner
+ */
+.banner
+{
+	margin-bottom: 25px;
+}
+.banner h1
+{
+	margin: 0px;
+	padding: 0px;
+	border-bottom: solid 4px hsl(212, 100%, 50%);
+	font-size: 52px;
+}
+.banner h2
+{
+	margin: 0px;
+	padding: 0px;
+	color: hsl(212, 100%, 50%);
+	font-family: sans-serif;
+	font-size: 20px;
+}
+/*
+ * For message boxes
+ */
+.error, .success, .notice
+{
+	padding: 10px;
+	margin-bottom: 20px;
+	border-radius: 5px;
+	border-style: solid;
+	border-width: 1px;
+}
+.error > *, .success > *
+{
+	color: white;
+}
+.error
+{
+	border-color: darkred;
+	background: hsl(352, 100%, 37%);
+	color: white;
+}
+.success
+{
+	border-color: hsl(159, 100%, 16%);
+	background: hsl(154, 100%, 23%);
+	color: white;
+}
+.notice
+{
+	border-color: hsl(34, 100%, 50%);
+	background: hsl(40, 100%, 50%);
+	color: black;
+}
+.proto
+{
+	border-color: darkviolet;
+	background: purple;
+	color: white;
+}
+.proto a:link, .proto a:visited
+{
+	color: lavender;
+}
+/*
+ * Specimen list display and search results
+ */
+.search-options
+{
+	width: 500px;
+	padding: 12px;
+	margin-top: 12px;
+	transition: width 0.35s;
+	overflow: hidden;
+}
+.search-options-wide
+{
+	width: 100%;
+	padding: 12px;
+	margin-top: 12px;
+	transition: width 0.3s;
+	overflow: hidden;
+}
+.hidden-search-options
+{
+	width: 0px;
+	height: 0px;
+	padding: 0px;
+	transition: width 0.3s;
+}
+.search-results-box
+{
+	width: 100%;
+	padding: 12px;
+}
+.short-select
+{
+	width: 250px;
+}
+.species-label a:link, .species-label a:visited
+{
+	color: black;
+	text-decoration: none;
+}
+.species-label a:hover
+{
+	text-decoration: underline;
+}
+.id-label
+{
+	padding: 6px;
+	border-radius: 4px;
+	background: hsl(218, 70%, 50%);
+	color: white;
+}
+.export-label
+{
+	padding: 6px;
+	border-radius: 4px;
+	background: hsl(158, 100%, 20%);
+	color: white;
+}
+.debug-relevance
+{
+	padding: 6px;
+	border-radius: 4px;
+	background: hsl(2, 100%, 40%);
+	color: white;
+}
+.pid-label
+{
+	padding: 6px;
+	border-radius: 4px;
+	background: dodgerblue;
+	color: white;
+}
+.username-label
+{
+	padding: 6px;
+	border-radius: 4px;
+	background: mediumvioletred;
+	color: white;
+}
+.username-label a:link, .username-label a:hover, .username-label a:visited
+{
+	color: inherit;
+	text-decoration: none;
+}
+.common-name-label
+{
+	margin: 4px;
+	color: hsl(21, 100%, 45%);
+}
+/*
+ * Datepicker pane
+ */
+.md-datepicker-calendar-pane
+{
+	background: white;
+}
+/*
+ * Form Controls
+ */
+md-input-container, .md-chips
+{
+	width: 500px;
+	padding: 2px;
+}
+md-input-container > label, .md-chips
+{
+	color: hsl(0, 0%, 16%);
+	font-size: 18px;
+}
+.long-input
+{
+	width: 100%;
+}
+button
+{
+	height: 36px;
+}
+input[required], *[required], input[required]:focus, *[required]:focus, .required
+{
+  border-bottom: dashed 1px hsl(1, 77%, 55%);
+}
+.md-chips
+{
+	margin-bottom: 20px;
+}
+
+.species-label-large
+{
+	padding: 7px;
+	margin: 0px;
+}
+.long-string
+{
+	overflow: auto;
+	word-wrap: break-word;
+}
+.list-controls
+{
+	padding-left: 13px;
+}
+.specimen-count
+{
+	margin: 0px;
+	padding: 3px;
+	text-align: center;
+}
+/*
+ * User profile cards (About Page)
+ */
+.profile-card
+{
+    margin: 8px;
+    padding: 8px;
+}
+.profile-card > img, .profile-pic
+{
+    height: 128px;
+    width: 128px;
+    margin: 5px;
+    border: solid 1px lightgray;
+    border-radius: 5px;
+}
+.profile-card > h4
+{
+    margin: 5px 0px;
+	text-align: center;
+}
+/*
+ * Genetics Info
+ */
+.dna-sequence
+{
+	padding-left: 0px;
+	list-style-type: none;
+}
+.dna-sequence > li
+{
+	display: inline;
+	font-weight: bold;
+}
+.dna-sequence > li > .G
+{
+	color: hsl(34, 100%, 50%);
+}
+.dna-sequence > li > .A
+{
+	color: hsl(212, 80%, 42%);
+}
+.dna-sequence > li > .T
+{
+	color: hsl(336, 78%, 43%);
+}
+.dna-sequence > li > .C
+{
+	color: hsl(92, 48%, 42%);
+}
+.dna-sequence > li > .N
+{
+	color: hsl(250, 50%, 30%);
+}
+/*
+ * File uploading
+ */
+.file-card
+{
+	padding: 0px;
+	margin: 10px;
+	width: 392px;
+}
+.thumbnail
+{
+	height: 200px;
+	width: 100%;
+	padding: 12px;
+	background-position: center center;
+	background-size: 100%;
+}
+.small-thumbnail
+{
+	height: 150px;
+	margin-right: 20px;
+	margin-bottom: 15px;
+	box-shadow: 2px 2px 4px hsla(0, 0%, 33%, 0.34);
+}
+.file-meta > *
+{
+	margin: 12px 14px 12px 14px;
+	padding: 0px 14px 0px 14px;
+	width: 360px;
+}
+.file-meta > md-input-container > *
+{
+	width: 332px;
+}
+/*
+ * Toast notifications
+ */
+.toast
+{
+	position: fixed;
+	bottom: 20px;
+	right: 20px;
+	z-index: 10000;
+	max-width: 60%;
+	box-shadow: -2px -2px 8px hsl(0, 0%, 30%);
+}
+/*
+ * Loading Bar (see angular-loading-bar)
+ */
+ #loading-bar .bar
+ {
+	 height: 4px;
+ }

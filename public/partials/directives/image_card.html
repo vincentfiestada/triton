@@ -1,0 +1,18 @@
+<!-- bio-image-card template -->
+<md-list-item class="file-card md-whiteframe-5dp" layout="column" layout-align="start stretch">
+	<div style="background-image: url(api/file/{{ image.fileId }})" class="thumbnail"
+			layout="row" layout-align="end end">
+		<md-button class="md-icon-button md-raised" 
+					data-ng-href="api/file/{{ image.fileId }}"
+					target="__blank">
+			<ng-md-icon icon="open_in_new"></ng-md-icon>
+			<md-tooltip>View full size</md-tooltip>
+		</md-button>
+	</div>
+	<div class="md-list-item-text file-meta">
+		<p><b>View: </b> {{ image.view | capitalize }}</p>
+		<p><i>{{ image.caption || "No caption available" }}</i></p>
+		<p>&copy; Copyright {{ image.copyright.year }} {{ image.copyright.holder }}</p>
+		<p>{{ image.copyright.license | license }}</p>
+	</div>
+</md-list-item>

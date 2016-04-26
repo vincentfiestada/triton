@@ -1,0 +1,11 @@
+<!-- Template for Error Toast notification -->
+<div class="toast error" layout="column" layout-align="start start">
+	<h3><ng-md-icon icon="{{ mode }}"></ng-md-icon>{{ title }}</h3>
+	<ul>
+		<li data-ng-repeat="err in errors">{{ err }}</li>
+	</ul>
+	<section layout="row">
+		<md-button class="md-raised" ng-click="close()">Close</md-button>
+		<md-button data-ng-href="https://gitlab.com/gilgamesh191/biodb/issues/new" target="__blank">Report Bug</md-button>
+	</section>
+</div>

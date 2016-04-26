@@ -1,0 +1,26 @@
+<md-card class="ng-scope">
+  <md-card-content>
+    <h2 class="md-display-1">Sign Up</h2>
+    <p class="note"><span class="required">Underlined fields</span> are required.</p>
+    <!-- Sign up input form -->
+    <form>
+      <md-input-container>
+        <label>Username</label>
+        <input ng-model="username" required />
+      </md-input-container>
+      <md-input-container>
+        <label>Email</label>
+        <input ng-model="email" type="email" required />
+      </md-input-container>
+      <md-input-container>
+        <label>Password</label>
+        <input type="password" ng-model="password" required/>
+      </md-input-container>
+      <md-input-container>
+        <label>Password again (must match!)</label>
+        <input type="password" ng-model="password2" required/>
+      </md-input-container>
+      <md-button class="md-raised md-primary" type="submit" ng-click="submit()">Sign Up</md-button>
+    </form>
+  </md-card-content>
+</md-card>

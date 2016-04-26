@@ -1,0 +1,22 @@
+<!-- trace_card.html -- Template for bioTraceCard directive -->
+<md-list-item class="file-card md-whiteframe-6dp" 
+			  layout="column" layout-align="start stretch">
+	<div class="title" layout="column" layout-align="center center">
+		<h4 class="md-title">{{ trace.filename }}</h4>
+		<i>{{ trace.fileId }}</i>
+		<div layout="row" layout-align="center center">
+			<md-button class="md-raised" 
+					data-ng-href="api/file/{{ trace.fileId }}"
+					target="__blank">
+				<ng-md-icon icon="file_download"></ng-md-icon>Download
+			</md-button>
+		</div>
+	</div>
+	<div class="md-list-item-text file-meta">
+		<p><b>PCR Forward Primer: </b>{{ trace.pcrFwd }}</p>
+		<p><b>PCR Reverse Primer: </b>{{ trace.pcrRev }}</p>
+		<p><b>Sequence Primer: </b>{{ trace.seqPrimer || "None" }}</p>
+		<p><b>Read Direction: </b>{{ trace.direction | direction }}</p>
+		<p><b>Marker: </b>{{ trace.marker || "None" }}</p>
+	</div>
+</md-list-item>

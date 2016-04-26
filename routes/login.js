@@ -61,7 +61,11 @@ login.post("/", function(req, res)
 							"expiresIn": 2592000, // expires in 30 days
 							"issuer": "poseidon"
 						});
-						res.send(token);// Send auth token to client
+						res.json( // Send auth token to client
+						{
+							"token": token,
+							"username": user.username
+						});
 					}
 				}
 				catch(e)

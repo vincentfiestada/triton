@@ -91,6 +91,7 @@ d.put("/", function(req, res)
 	Device.updateOne(
 	{
 		"_id": req.params.id,
+		"owner": req.vtoken.id,
 	},
 	req.body,
 	function(err, device)
@@ -121,6 +122,7 @@ d.get("/:id", function(req, res)
 	Device.findOne(
 	{
 		"_id": req.params.id,
+		"owner": req.vtoken.id,
 	},
 	function(err, device)
 	{
@@ -149,6 +151,7 @@ d.delete("/:id", function(req, res)
 	Device.removeOne(
 	{
 		"_id": req.params.id,
+		"owner": req.vtoken.id,
 	},
 	function(err)
 	{
@@ -177,6 +180,7 @@ d.post("/:id", function(req, res)
 	Device.findOne(
 	{
 		"_id": req.params.id,
+		"owner": req.vtoken.id,
 	},
 	function(err, device)
 	{

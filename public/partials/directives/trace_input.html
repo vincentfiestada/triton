@@ -1,0 +1,55 @@
+<!-- trace_input.html -- Template for bioTraceInput directive -->
+<md-list-item class="file-card md-whiteframe-6dp" 
+			  layout="column" layout-align="start stretch">
+	<div ng-show="isNew" class="title" layout="column" layout-align="center center">
+		<h4 class="md-title">{{ trace.name }}</h4>
+	</div>
+	<div ng-hide="isNew" class="title" layout="column" layout-align="center center">
+		<h4 class="md-title">{{ trace.filename }}</h4>
+		<i>{{ trace.fileId }}</i>
+		<div layout="row" layout-align="center center">
+			<md-button class="md-icon-button md-raised" 
+					data-ng-href="api/file/{{ trace.fileId }}"
+					target="__blank">
+				<ng-md-icon icon="file_download"></ng-md-icon>
+				<md-tooltip>Download</md-tooltip>
+			</md-button>
+			<md-button class="md-icon-button md-raised md-warn" 
+						ng-click="deleteFile(trace.fileId, 'trace_file')">
+				<ng-md-icon icon="delete"></ng-md-icon>
+				<md-tooltip>Delete this image</md-tooltip>
+			</md-button>
+		</div>
+	</div>
+	<div class="md-list-item-text file-meta">
+		<md-input-container>
+			<label>PCR Forward Primer</label>
+			<input type="text" required ng-model="info.pcrFwd" />
+		</md-input-container>
+		<md-input-container>
+			<label>PCR Reverse Primer</label>
+			<input type="text" required ng-model="info.pcrRev" />
+		</md-input-container>
+		<md-input-container>
+			<label>Sequence Primer</label>
+			<input type="text" ng-model="info.seqPrimer" />
+		</md-input-container>
+		<md-input-container>
+			<label>Read Direction</label>
+			<md-select required data-ng-model="info.direction">
+				<md-option value="fwd">Forward</md-option>
+				<md-option value="rev">Reverse</md-option>
+			</md-select>
+		</md-input-container>
+		<md-input-container>
+			<label>Marker</label>
+			<md-select data-ng-model="info.marker">
+				<md-option value="COI-5P">COI-5P</md-option>
+				<md-option value="ITS">ITS</md-option>
+				<md-option value="rbcLa">rbcLa</md-option>
+				<md-option value="matK">matK</md-option>
+				<md-option value="">None</md-option>
+			</md-select>
+		</md-input-container>
+	</div>
+</md-list-item>

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>CS 145 Capstone Project - Triton</title>
+	<!-- Angular Stylings -->
+    <link rel="stylesheet" href="n/angular-material/angular-material.min.css" />
+    <link rel="stylesheet" href="n/angular-loading-bar/build/loading-bar.min.css" type="text/css" />
+	<!-- Fonts -->
+	<!-- App styles -->
+    <link rel="stylesheet" href="p/css/app.css" />
+	<!-- Favicon -->
+    <link rel="shortcut icon" href="p/img/logo_big.png" />
+</head>
+<body ng-app="triton" ng-controller="rootCtrl" layout="column" layout-fill>
+    <!-- Main template: All pages should inherit from this page -->
+    <header>
+        <md-toolbar class="md-primary">
+            <div class="md-toolbar-tools">
+                <!--<img src="p/img/logo.svg" class="logo" />-->
+                <h1>cs145</h1>
+            </div>
+            <!-- Navbar -->
+            <!-- Layout with Angular Material: The two children should have a space between them -->
+            <nav layout="row" layout-align="space-between center">
+              <div layout="row" layout-align="start center">
+                <!-- Main Page navbar buttons/links -->
+                <md-button md-no-ink ui-sref="home">Home</md-button>
+                <md-button md-no-ink ui-sref="about">About</md-button>
+              </div>
+              <div layout="row" layout-align="start center">
+                  <!-- Login Page & Sign up link (hide if loggedIn == true) -->
+                  <md-button ng-hide="(token)" ui-sref="signup" class="md-raised">Sign Up</md-button>
+                  <md-button ng-hide="(token)" ui-sref="login" class="md-raised md-accent">Login</md-button>
+                  <!-- User menu (show only if loggedIn == true) -->
+                  <!-- Drop Down menu (using Angular Material's md-menu) -->
+                  <md-menu ng-show="(token)">
+                      <md-button md-no-ink md-menu-origin class="md-raised md-accent" ng-click="$mdOpenMenu()">
+                        <md-icon md-svg-icon="account-box"></md-icon>
+                        {{ username }}
+                      </md-button>
+                      <md-menu-content>
+                        <!-- Drop Down menu items -->
+                          <md-menu-item>
+                              <md-button md-no-ink ui-sref="dashboard">My Dashboard</md-button>
+                          </md-menu-item>
+                          <md-menu-item>
+                              <md-button md-no-ink ui-sref="settings">Account Settings</md-button>
+                          </md-menu-item>
+						  <md-divider></md-divider>
+                          <md-menu-item>
+                              <md-button md-no-ink ng-click="logOut()">Log Out</md-button>
+                          </md-menu-item>
+                      </md-menu-content>
+                  </md-menu>
+              </div>
+            </nav>
+        </md-toolbar>
+    </header>
+    <div ui-view>
+        <!-- Partial Page contents appear here -->
+        <!-- Some Default content: -->
+        <div flex layout="column" layout-align="center center">
+            <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+        </div>
+    </div>
+
+    <!--Angular Scripts-->
+    <script lang="Javascript" src="n/angular/angular.min.js"></script>
+    <script lang="Javascript" src="n/angular-ui-router/release/angular-ui-router.min.js"></script>
+    <script lang="Javascript" src="n/angular-aria/angular-aria.js"></script>
+    <script lang="Javascript" src="n/angular-animate/angular-animate.js"></script>
+    <script lang="Javascript" src="n/angular-material/angular-material.min.js"></script>
+    <script lang="Javascript" src="n/angular-loading-bar/build/loading-bar.min.js"></script>
+	<!-- Shims -->
+    <!--Client app modules-->
+	<script lang="Javascript" src="p/js/toast.js"></script>
+    <script lang="Javascript" src="p/js/ctrl.js"></script>
+    <script lang="Javascript" src="p/js/filters.js"></script>
+	<script lang="Javascript" src="p/js/directives.js"></script>
+    <script lang="Javascript" src="p/js/client.js"></script>
+</body>
+</html>

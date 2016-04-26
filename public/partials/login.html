@@ -1,0 +1,29 @@
+<md-card>
+  <md-card-content>
+      <h2 class="md-display-1">Login</h2>
+      <!-- Message section -->
+      <!-- Show the message section if msgType != '' -->
+      <!-- Layout using Angular Material: row -->
+      <!-- Auto-hide the message using Angular's ng-show -->
+      <section ng-show="(msgType != '')" class="{{ msgType }}">
+          <p><ng-md-icon icon="{{ (msgType == 'error') ? 'error' : 'verified_user' }}"></ng-md-icon>{{ msg }}</p>
+          <!-- Display errors in errors array -->
+          <ul ng-show="(msgType == 'error')">
+            <li ng-repeat="e in errors">{{e}}</li>
+          </ul>
+      </section>
+      <!-- Login input form -->
+      <form>
+        <md-input-container>
+          <label>Username</label>
+          <input required ng-model="username"></input>
+          <!-- The model name = name in $scope inside controller -->
+        </md-input-container>
+        <md-input-container>
+          <label>Password</label>
+          <input type="password" required ng-model="password"></input>
+        </md-input-container>
+        <md-button class="md-raised md-primary" type="submit" ng-click="submit()">Submit</md-button>
+      </form>
+  </md-card-content>
+</md-card>

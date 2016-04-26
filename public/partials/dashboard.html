@@ -1,0 +1,71 @@
+<md-card>
+	<md-card-content>
+		<h2 class="md-display-1">Dashboard</h2>
+		
+		<p>The night is dark and full of terrors. So set your estranged daughter on fire.</p>
+		
+		<h3 class="md-title">Sensor Devices</h3>
+		<!-- List order/filter controls -->
+		<md-button class="md-raised md-accent" ng-click="getData(true)">
+			<md-icon md-svg-icon="refresh"></md-icon>Reload
+		</md-button>
+		<md-button class="md-raised md-warn" >
+			<md-icon md-svg-icon="delete"></md-icon>Delete Selected
+		</md-button>
+		<section layout="row" class="list-controls">
+			<md-checkbox aria-label="Select or unselect all" ng-model="all_selected" ng-click="selectAll()"></md-checkbox>
+			<md-menu>
+				<md-button md-menu-origin class="md-raised md-primary" ng-click="$mdOpenMenu()">
+					<md-icon md-svg-icon="sort"></md-icon>Sort by {{ sortProp | namify }}
+				</md-button>
+				<md-menu-content>
+				<!-- Drop Down menu items -->
+					<md-menu-item>
+						<md-button ng-click="sort('nickname')">By nickname</md-button>
+					</md-menu-item>
+					<md-menu-item>
+						<md-button ng-click="sort('lastReading')">By latest reading</md-button>
+					</md-menu-item>
+				</md-menu-content>
+			</md-menu>
+			<md-switch ng-model="sortReversed">{{ (sortReversed) ? "Descending" : "Ascending" }}</md-switch>
+		</section>
+
+		<md-list>
+			<md-list-item ng-repeat="device in devices | orderBy: sortProp: sortReversed | limitTo: limit: offset" class="species-card">
+				<md-checkbox ng-model="device.selected"></md-checkbox>
+				<div>
+					<p>
+						<span class="id-label">{{ device.nickname || device._id }}</span>
+						<md-icon md-svg-icon="{{ (device.receiveFrom) ? 'check-circle' : 'close-circle' }}"></md-icon>{{ (device.receiveFrom) ? "Receiving Data" : "Blocked" }}
+					</p>
+					<p>Latest Reading: {{ device.lastReading | date }}</p>
+					<p>Last emptied on {{ device.lastReading | date }}</p>
+				</div>
+				<div layout="row" class="md-secondary">
+					<md-button class="md-icon-button" ui-sref="device({ 'id': device._id })">
+						<md-icon md-svg-icon="open-in-app"></md-icon>
+						<md-tooltip>View Device Details</md-tooltip>
+					</md-button>
+					<md-button class="md-icon-button" ui-sref="deviceEdit({ 'id': device._id })">
+						<md-icon md-svg-icon="settings"></md-icon>
+						<md-tooltip>Device Settings</md-tooltip>
+					</md-button>
+				</div>
+				<md-divider></md-divider>
+			</md-list-item>
+		</md-list>
+		<div layout="row" layout-align="space-between center">
+		  <md-button class="md-raised md-icon-button" ng-click="changeResultsOffset(-1)" ng-disabled="(offset === 0)">
+		    <ng-md-icon icon="navigate_before"></ng-md-icon>
+		    <md-tooltip>Previous Page</md-tooltip>
+		  </md-button>
+			<p>Showing sensors {{ offset + 1 }} - {{ (devices.length < offset + limit) ? devices.length : offset + limit }} of {{ devices.length }}</p>
+		  <md-button class="md-raised md-icon-button" ng-click="changeResultsOffset(1)" ng-disabled="(offset + limit >= devices.length)">
+		    <ng-md-icon icon="navigate_next"></ng-md-icon>
+		    <md-tooltip>Next Page</md-tooltip>
+		  </md-button>
+		</div>
+		
+	</md-card-content>
+</md-card>
