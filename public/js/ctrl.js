@@ -136,7 +136,7 @@ ctrls.controller("loginCtrl", function($scope, $http, $rootScope, $state, $state
 				if ($window.sessionStorage)
 				{
 					$window.sessionStorage.poseidon_t = res.data.token;
-					$window.sessionStorage.poseidon_u = res.data.username;
+					$window.sessionStorage.poseidon_u = $scope.username;
 				}
 				/*
 				 * Retrieve stuff from local storage into $rootScope

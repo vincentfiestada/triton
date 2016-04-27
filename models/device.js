@@ -30,7 +30,11 @@ module.exports = mongoose.model("Device", new Schema(
 		"required": true,
 		"default": true,
 	},
-	"maxCapacity": Number, // Max capacity of bucket this device is monitoring
+	"maxCapacity": // Max capacity of bucket this device is monitoring (in cm)
+	{
+		"type": Number,
+		"required": true	
+	},
 	"lastReading": Date, // DateTime when last sensor reading was received from device
 	"lastEmptied": Date, // DateTime when the sensor last got an `empty bucket` reading
 	"readings": [Reading]

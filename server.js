@@ -29,7 +29,7 @@ var conn = goose(constants.DB_URL);
 conn.once("open", function()
 {
 	console.log("Mongoose connection is open.");
-	var port = process.env.port || 4000;
+	var port = process.env.port || 80;
 	triton.listen(port);
 	console.log("Triton started. Server listening on port %s", port);
 	console.log(" ---------------------------------------- " );

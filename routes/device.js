@@ -5,6 +5,7 @@
 var express = require("express");
 var bodyParser = require("body-parser");
 var bcrypt = require("bcrypt-nodejs");
+var jwt = require("jsonwebtoken");
 var verify = require("../services/verify");
 var errors = require("../services/errors");
 var Device = require("../models/device"); // Mongoose models
@@ -75,7 +76,18 @@ d.post("/", function(req, res)
 				errors.sendVerbose(res, 400, "ERR_DEVICE_CREATE", errs);
 			}
 			console.log("<+> A new device `%s` has been configured.", device._id);
-			res.send(device._id);
+			// Create a signed JSON Web Token for the device
+			var token = jwt.sign(
+			{
+				"id": device._id,
+			},
+			// Encryption key (should be changed regularly)
+			// Note: this has no expiration
+			process.env.trident || "Riptide!",
+			{
+				"issuer": "poseidon"
+			});
+			res.send(token); // Send token
 		}
 		catch(e)
 		{
@@ -123,6 +135,14 @@ d.get("/:id", function(req, res)
 	{
 		"_id": req.params.id,
 		"owner": req.vtoken.id,
+	},
+	{
+		"owner": 1,
+		"receiveFrom": 1,
+		"lastEmptied": 1,
+		"lastReading": 1,
+		"readings": { "$slice": -100 },
+		"maxCapacity": 1,
 	},
 	function(err, device)
 	{
@@ -173,14 +193,22 @@ d.delete("/:id", function(req, res)
 	});
 });
 /**
- * POST /api/device/:id - Record new sensor reading
+ * GET /api/device/:id/token - Get a signed token for this device.
  */
-d.post("/:id", function(req, res)
+d.get("/:id/token", function(req, res)
 {
 	Device.findOne(
 	{
 		"_id": req.params.id,
 		"owner": req.vtoken.id,
+	},
+	{
+		"owner": 1,
+		"receiveFrom": 0,
+		"lastEmptied": 0,
+		"lastReading": 0,
+		"readings": 0,
+		"maxCapacity": 0,
 	},
 	function(err, device)
 	{
@@ -190,50 +218,25 @@ d.post("/:id", function(req, res)
 			{
 				errors.send(res, 500, "ERR_DB_DEVICE");
 			}
-			else if (device.receiveFrom !== true)
-			{
-				// Make sure this device is allowed to record sensor data
-				errors.sendQuiet(res, 401, "ERR_DEVICE_BLOCKED");
-			}
 			else
 			{
-				// Add new Reading
-				if (typeof device.readings === "undefined")
+				// Create a signed JSON Web Token for the device
+				var token = jwt.sign(
 				{
-					device.readings = [];
-				}
-				device.readings.push(
+					"id": device._id,
+				},
+				// Encryption key (should be changed regularly)
+				// Note: this has no expiration
+				process.env.trident || "Riptide!",
 				{
-					"level": req.body.level,
-					"dateSent": req.body.date,
+					"issuer": "poseidon"
 				});
-				// Record date of last reading
-				device.lastReading = new Date();
-				if (+req.body.level === 0)
-				{
-					// if empty, record date
-					device.lastEmptied = new Date();
-				}
-				device.save(function(err)
-				{
-					try
-					{
-						if (err)
-						{
-							errors.send(res, 500, "ERR_DEVICE_SAVE");
-						}
-						res.status(200).end();
-					}
-					catch(e)
-					{
-						console.log("<E> POST /api/device/:id > save : %s", e);
-					}
-				});
+				res.send(token); // Send token
 			}
 		}
 		catch(e)
 		{
-			console.log("<E> POST /api/device/:id : %s", e);
+			console.log("<E> GET /api/device/:id : %s", e);
 		}
 	});
 });
