@@ -129,13 +129,13 @@ ctrls.controller("loginCtrl", function($scope, $http, $rootScope, $state, $state
 		.then(function success(res)
 		{
 			// make sure a token was sent
-			if (res.data.token)
+			if (res.data)
 			{
 				showSuccess($mdToast, "You are now logged in.");
 				// Put token, user level, and username in sessionStorage
 				if ($window.sessionStorage)
 				{
-					$window.sessionStorage.poseidon_t = res.data.token;
+					$window.sessionStorage.poseidon_t = res.data;
 					$window.sessionStorage.poseidon_u = $scope.username;
 				}
 				/*
@@ -256,12 +256,12 @@ ctrls.controller("dashboardCtrl", function($scope, $http, $rootScope, $mdToast)
 /*
  * Device View Controller
  */
-ctrls.controller("deviceCtrl", function($scope, $http, $rootScope, $mdToast, $stateParams)
+ctrls.controller("deviceCtrl", function($scope, $http, $rootScope, $mdToast, $stateParams, $mdDialog)
 {
 	var config = getConfig($rootScope);
 	$scope.getDevice = function()
 	{
-		$http.get("api/device/" + $stateParams.id, config)
+		$http.get("/api/device/" + $stateParams.id + "?t=" + Date.now().toString(), config)
 		.then(function success(res)
 		{
 			$scope.device = res.data;
@@ -272,4 +272,29 @@ ctrls.controller("deviceCtrl", function($scope, $http, $rootScope, $mdToast, $st
 		});
 	};
 	$scope.getDevice(); // Get devices for the first time
+	
+	$scope.getToken = function()
+	{
+		$http.get("/api/device/" + $stateParams.id + "/token", config)
+		.then(function success(res)
+		{
+			$mdDialog.show(
+			{
+				"templateUrl": "/p/partials/dialogs/token.html",
+				"openFrom": document.getElementsByTagName("body")[0],
+				"controller": "tokenDialogCtrl",
+				"locals": { "token": res.data },
+				"autoWrap": false,
+			});
+		},
+		function error(res)
+		{
+			showError($mdToast, res.status, "Could not retrieve device info.", res.data);
+		});
+	};
+	
+	$scope.settings = function()
+	{
+		showInfo($mdToast, "In the mean time, why not sing a song?", "Not Implemented");
+	};
 });

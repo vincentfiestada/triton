@@ -1,5 +1,5 @@
 /*
- * toast.js - Controller for toast notifications
+ * toast.js - Controller for toast notifications and dialog boxes
  */
 
 var toastCtrls = angular.module("toastCtrls", []);
@@ -31,4 +31,12 @@ toastCtrls.controller("infoToastCtrl", function($scope, $mdToast, msg, title)
 	$scope.msg = msg;
 	$scope.title = title;
 	$scope.close = $mdToast.hide;
+});
+/*
+ * tokenDialogCtrl - controller for displaying a newly generated device token
+ */
+toastCtrls.controller("tokenDialogCtrl", function($scope, $mdDialog, token)
+{
+	$scope.token = token;
+	$scope.close = $mdDialog.cancel;
 });

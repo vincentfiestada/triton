@@ -58,7 +58,7 @@ login.post("/", function(req, res)
 						// Encryption key (should be changed regularly)
 						process.env.trident || "Riptide!",
 						{
-							"expiresIn": 2592000, // expires in 30 days
+							"expiresIn": 604800, // expires in 7 days
 							"issuer": "poseidon"
 						});
 						res.send(token);

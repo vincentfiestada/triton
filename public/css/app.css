@@ -372,6 +372,21 @@ input[required], *[required], input[required]:focus, *[required]:focus, .require
 	max-width: 60%;
 	box-shadow: -2px -2px 8px hsl(0, 0%, 30%);
 }
+*[role=dialog]
+{
+	width: 60%;
+}
+.alert
+{
+	padding: 10px;
+	box-shadow: -2px -2px 8px hsl(0, 0%, 30%);
+}
+.code
+{
+	width: 100%;
+	font-family: monospace;
+	resize: none;
+}
 /*
  * Loading Bar (see angular-loading-bar)
  */

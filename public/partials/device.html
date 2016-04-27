@@ -6,7 +6,14 @@
 		<p><b>Maximum Capacity: </b>{{ device.maxCapacity }} cm</p>
 		<p><md-icon md-svg-icon="{{ (device.receiveFrom) ? 'check-circle' : 'close-circle' }}"></md-icon>{{ (device.receiveFrom) ? "Receiving sensor readings" : "Readings from this device are not being recorded" }}</p>
 		
-		<p>Is Peter Dinklage British or American? I can never tell. Did you know he was in Narnia?</p>
+		<md-button class="md-raised md-primary" ng-click="settings()">
+			<md-icon md-svg-icon="settings"></md-icon>Configure
+			<md-tooltip>Configure device settings</md-tooltip> 
+		</md-button>
+		<md-button class="md-raised" ng-click="getToken()">
+			<md-icon md-svg-icon="key-variant"></md-icon>Get Token
+			<md-tooltip>Get a token for this device</md-tooltip> 
+		</md-button>
 		
 		<h3 class="title">Latest sensor readings</h3>
 		<p ng-repeat="reading in device.readings | orderBy: dateSent : 1">{{ reading.dateSent | date : "MMM d, y h:mm:ss a" }}: {{ reading.level }} cm</p>

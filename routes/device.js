@@ -59,11 +59,11 @@ d.get("/", function(req, res)
  */
 d.post("/", function(req, res)
 {
+	// Note: The device will set its own maxCapacity
 	var newDevice = new Device(
 	{
 		"owner": req.vtoken.id,
 		"nickname": req.body.nickname,
-		"maxCapacity": req.body.maxCapacity,
 		"readings": [],		
 	});
 	newDevice.save(function(err, device)
@@ -100,6 +100,7 @@ d.post("/", function(req, res)
  */
 d.put("/", function(req, res)
 {
+	// <!!!> BIG TODO: Update this code. This is totes wrong
 	Device.updateOne(
 	{
 		"_id": req.params.id,
@@ -129,7 +130,7 @@ d.put("/", function(req, res)
 /**
  * GET /api/device/:id - Get Information about a specific device
  */
-d.get("/:id", function(req, res)
+d.get("/:id/", function(req, res)
 {
 	Device.findOne(
 	{
@@ -166,7 +167,7 @@ d.get("/:id", function(req, res)
 /**
  * DELETE /api/device/:id - Delete all data about a specific device
  */
-d.delete("/:id", function(req, res)
+d.delete("/:id/", function(req, res)
 {
 	Device.removeOne(
 	{
@@ -195,20 +196,12 @@ d.delete("/:id", function(req, res)
 /**
  * GET /api/device/:id/token - Get a signed token for this device.
  */
-d.get("/:id/token", function(req, res)
+d.get("/:id/token/", function(req, res)
 {
 	Device.findOne(
 	{
 		"_id": req.params.id,
 		"owner": req.vtoken.id,
-	},
-	{
-		"owner": 1,
-		"receiveFrom": 0,
-		"lastEmptied": 0,
-		"lastReading": 0,
-		"readings": 0,
-		"maxCapacity": 0,
 	},
 	function(err, device)
 	{
@@ -236,7 +229,7 @@ d.get("/:id/token", function(req, res)
 		}
 		catch(e)
 		{
-			console.log("<E> GET /api/device/:id : %s", e);
+			console.log("<E> GET /api/device/:id/token : %s", e);
 		}
 	});
 });

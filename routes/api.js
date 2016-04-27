@@ -14,9 +14,9 @@ api.get("/test", function(req, res)
 	console.log(" %s : This is a test.", new Date());
 	res.end();
 });
+api.use("/sense", sense);
 api.use("/login", login);
 api.use("/user", user);
 api.use("/device", device);
-api.use("/sense", device);
 
 module.exports = api;

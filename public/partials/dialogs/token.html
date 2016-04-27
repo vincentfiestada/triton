@@ -1,0 +1,8 @@
+<!-- Template for device token dialog box -->
+<div class="alert" layout="column" layout-align="start start">
+	<h3><md-icon md-svg-icon="key-variant"></md-icon>Token Generated</h3>
+	<p>Configure your device with this authentication token: </p>
+	<textarea class="code" ng-model="token" ng-readonly="true"></textarea>
+	<br />
+	<md-button class="md-raised md-primary" ng-click="close()">Close</md-button>
+</div>

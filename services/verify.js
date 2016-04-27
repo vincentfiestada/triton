@@ -26,6 +26,7 @@ module.exports = function(req, res, next) // Export this middleware so it can be
 			{
 				// if everything is good, save to request for use in other routes
 				req.vtoken = decoded;
+
 				return next(); // Move on to next middleware
 			}
 		});
