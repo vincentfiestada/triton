@@ -1,10 +1,11 @@
 <md-card>
 	<md-card-content>
 		<h2 class="md-display-1 id-label">{{ device.nickname || "Device " + device._id }}</h2>
-		<p><b>Last Reading on </b>{{ device.lastReading | date: "MMM d, y h:mm:ss a" }}</p>
-		<p><b>Last Emptied on </b>{{ device.lastEmptied | date: "MMM d, y h:mm:ss a" }}</p>
+		<p><b>Last Reading </b><span am-time-ago="device.lastReading"></span></p>
+		<p><b>Last Emptied </b><span am-time-ago="device.lastEmptied"></span></p>
 		<p><b>Maximum Capacity: </b>{{ device.maxCapacity }} cm</p>
 		<p><md-icon md-svg-icon="{{ (device.receiveFrom) ? 'check-circle' : 'close-circle' }}"></md-icon>{{ (device.receiveFrom) ? "Receiving sensor readings" : "Readings from this device are not being recorded" }}</p>
+		<p ng-show="isStagnant"><md-icon md-svg-icon="alert-box"></md-icon>Stagnant</p>
 		
 		<md-button class="md-raised md-primary" ng-click="settings()">
 			<md-icon md-svg-icon="settings"></md-icon>Configure
@@ -14,9 +15,16 @@
 			<md-icon md-svg-icon="key-variant"></md-icon>Get Token
 			<md-tooltip>Get a token for this device</md-tooltip> 
 		</md-button>
+		<md-button class="md-raised" ng-click="getDevice()">
+			<md-icon md-svg-icon="refresh"></md-icon>Refresh
+			<md-tooltip>Retrieve latest sensor data</md-tooltip> 
+		</md-button>
+		
 		
 		<h3 class="title">Latest sensor readings</h3>
-		<p ng-repeat="reading in device.readings | orderBy: dateSent : 1">{{ reading.dateSent | date : "MMM d, y h:mm:ss a" }}: {{ reading.level }} cm</p>
+		<canvas id="line" class="chart chart-line" chart-data="levels"
+		chart-labels="labels" chart-series="series">
+		</canvas>  
 		
 	</md-card-content>
 </md-card>

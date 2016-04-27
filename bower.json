@@ -1,0 +1,28 @@
+{
+  "name": "triton",
+  "description": "A RESTful API for recording, retrieving and analyzing water level data from water level sensors",
+  "main": "server.js",
+  "authors": [
+    "Vincent Fiestada"
+  ],
+  "license": "MIT",
+  "keywords": [
+    "API",
+    "water",
+    "level",
+    "sensor"
+  ],
+  "homepage": "https://github.com/vincentfiestada/triton",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular-chart.js": "^0.10.2",
+    "angular-moment": "^0.10.3"
+  }
+}

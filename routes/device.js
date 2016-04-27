@@ -100,13 +100,20 @@ d.post("/", function(req, res)
  */
 d.put("/", function(req, res)
 {
-	// <!!!> BIG TODO: Update this code. This is totes wrong
-	Device.updateOne(
+	Device.update(
 	{
 		"_id": req.params.id,
 		"owner": req.vtoken.id,
 	},
-	req.body,
+	{
+		// Only these properties can be changed manually
+		"$set":
+		{
+			"maxCapacity": req.body.maxCapacity,
+			"nickname": req.body.nickname,
+			"receiveFrom": req.body.receiveFrom
+		},
+	},
 	function(err, device)
 	{
 		try
@@ -142,7 +149,7 @@ d.get("/:id/", function(req, res)
 		"receiveFrom": 1,
 		"lastEmptied": 1,
 		"lastReading": 1,
-		"readings": { "$slice": -100 },
+		"readings": { "$slice": -50 },
 		"maxCapacity": 1,
 	},
 	function(err, device)

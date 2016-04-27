@@ -256,15 +256,44 @@ ctrls.controller("dashboardCtrl", function($scope, $http, $rootScope, $mdToast)
 /*
  * Device View Controller
  */
-ctrls.controller("deviceCtrl", function($scope, $http, $rootScope, $mdToast, $stateParams, $mdDialog)
+ctrls.controller("deviceCtrl", function($scope, $http, $rootScope, $mdToast, $stateParams, $mdDialog, moment, $timeout)
 {
+	$scope.series = ["Sensor Readings"];
 	var config = getConfig($rootScope);
+	var updateTask = null;
 	$scope.getDevice = function()
 	{
 		$http.get("/api/device/" + $stateParams.id + "?t=" + Date.now().toString(), config)
 		.then(function success(res)
 		{
+			if (updateTask)
+			{
+				$timeout.cancel(updateTask);
+				updateTask = null;
+			}
 			$scope.device = res.data;
+			// Get sensor data
+			$scope.levels = [[]];
+			$scope.labels = [];
+			for(var i = 0; i < res.data.readings.length; i++)
+			{
+				$scope.levels[0].push(res.data.readings[i].level);
+				$scope.labels.push(moment(res.data.readings[i].dateSent).fromNow());
+			}
+			console.log($scope.levels[0]);
+			// Check if stagnant
+			$scope.isStagnant = false;
+			var now = new Date();
+			var lastEmptied = new Date(res.data.lastEmptied);
+			var diff = now.getTime() - lastEmptied.getTime();
+			console.log(diff);
+			if (diff >= 259200000) // 259200000 ms is 3 days
+			{
+				$scope.isStagnant = true;
+				console.log("Stagnant");
+			}
+			// Set timeout for next update 
+			var updateTask = $timeout($scope.getDevice, 2000);
 		},
 		function error(res)
 		{

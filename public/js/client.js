@@ -2,7 +2,7 @@
  * client.js - Declares and configures AngularJS app module
  */
 
-var triton = angular.module("triton", ["ui.router", "ngMaterial", "angular-loading-bar", "toastCtrls", "tritonCtrls", "tritonFilters", "tritonDirectives"]);
+var triton = angular.module("triton", ["ui.router", "ngMaterial", "angular-loading-bar", "chart.js", "angularMoment", "toastCtrls", "tritonCtrls", "tritonFilters", "tritonDirectives"]);
 triton.config(function($stateProvider, $urlRouterProvider, $mdThemingProvider, $mdIconProvider, cfpLoadingBarProvider)
 {
 	/*

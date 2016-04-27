@@ -14,6 +14,7 @@ triton.use("/api", api);
 // <<< Some static file routes >>>
 triton.use("/p", express.static("public"));
 triton.use("/n", express.static("node_modules"));
+triton.use("/b", express.static("bower_components"));
 triton.get("/", function(req, res) // Application home page
 {
 	res.sendFile("public/index.html", constants.STATIC_SEND_OPTS);

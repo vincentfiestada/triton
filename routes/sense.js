@@ -29,6 +29,10 @@ s.post("/reading", function(req, res)
 	{
 		"_id": req.vtoken.id,
 	},
+	{
+		"receiveFrom": 1,
+		"lastEmptied": 1,	
+	},
 	function(err, device)
 	{
 		try
@@ -45,24 +49,19 @@ s.post("/reading", function(req, res)
 			else
 			{
 				var now = new Date(); // Get current DateTime
-				// Add new Reading
-				if (typeof device.readings === "undefined")
+				var level = +req.body.level;
+				
+				Device.update({"_id": req.vtoken.id}, 
 				{
-					device.readings = [];
-				}
-				device.readings.push(
-				{
-					"level": req.body.level,
-					"dateSent": now,
-				});
-				// Record date of last reading
-				device.lastReading = now;
-				if (+req.body.level === 0)
-				{
-					// if empty, record date
-					device.lastEmptied = now;
-				}
-				device.save(function(err)
+					"$push": { "readings": { "level": level, "dateSent": now } },
+					"$set": 
+					{
+						"lastReading": now,
+						// I guess <= 2 cm is (practically empty)
+						"lastEmptied": (level <= 2) ? now : device.lastEmptied
+					}
+				},
+				function(err)
 				{
 					try
 					{
@@ -95,6 +94,10 @@ s.put("/capacity", function(req, res)
 	{
 		"_id": req.vtoken.id,
 	},
+	{
+		"receiveFrom": 1,
+		"maxCapacity": 1,
+	},
 	function(err, device)
 	{
 		try
@@ -115,8 +118,15 @@ s.put("/capacity", function(req, res)
 			}
 			else
 			{
-				device.maxCapacity = +req.body.capacity;
-				device.save(function(err)
+				var maxCapacity = +req.body.capacity;
+				Device.update({"_id": req.vtoken.id}, 
+				{
+					"$set": 
+					{
+						"maxCapacity": maxCapacity,
+					}
+				},
+				function(err)
 				{
 					try
 					{

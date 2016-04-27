@@ -6,7 +6,7 @@ var mongoose = require("mongoose");
 var Schema = mongoose.Schema;
 
 // Child documents
-var Reading = require("./schema/reading");
+//var Reading = require("./schema/reading");
 
 var name_regexp = /^[a-z]([a-z0-9_\.])*$/i;
 
@@ -37,5 +37,17 @@ module.exports = mongoose.model("Device", new Schema(
 	},
 	"lastReading": Date, // DateTime when last sensor reading was received from device
 	"lastEmptied": Date, // DateTime when the sensor last got an `empty bucket` reading
-	"readings": [Reading]
+	"readings": 
+	[{
+		"level":
+		{
+			"type": Number,
+			"required": true,
+		},
+		"dateSent": 
+		{
+			"type": Date,
+			"required": true,
+		}
+	}]
 }));
