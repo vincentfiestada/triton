@@ -24,14 +24,14 @@ s.use(verify); // Require a valid auth token
  */
 s.post("/reading", function(req, res)
 {
-	console.log(" Sensor reported level at %s", req.body.level);
 	Device.findOne(
 	{
 		"_id": req.vtoken.id,
 	},
 	{
 		"receiveFrom": 1,
-		"lastEmptied": 1,	
+		"lastEmptied": 1,
+		"maxCapacity": 1,	
 	},
 	function(err, device)
 	{
@@ -39,17 +39,27 @@ s.post("/reading", function(req, res)
 		{
 			if (err || !device)
 			{
-				errors.send(res, 500, "ERR_DB_DEVICE");
+				errors.send(res, 404, "ERR_DB_DEVICE");
 			}
 			else if (device.receiveFrom !== true)
 			{
 				// Make sure this device is allowed to record sensor data
 				errors.sendQuiet(res, 401, "ERR_DEVICE_BLOCKED");
 			}
+			else if (typeof device.maxCapacity !== "number" || device.maxCapacity <= 0 )
+			{
+				// Make sure maxCapacity is set
+				errors.sendQuiet(res, 400, "ERR_CAPACITY_NIL");
+				console.log("Hello");
+			}
 			else
 			{
+				// Note: req.body.level is the level of the sensor from the water -- or the distance
+				//  of the sensor from the water's surface
 				var now = new Date(); // Get current DateTime
-				var level = +req.body.level;
+				// Water level = max water height - distance of sensor from water
+				var level = Math.abs(device.maxCapacity - (+req.body.level));
+				console.log(" Sensor reported level at %s", level);
 				
 				Device.update({"_id": req.vtoken.id}, 
 				{
@@ -57,8 +67,8 @@ s.post("/reading", function(req, res)
 					"$set": 
 					{
 						"lastReading": now,
-						// I guess <= 2 cm is (practically empty)
-						"lastEmptied": (level <= 2) ? now : device.lastEmptied
+						// I guess < 3 cm is (practically) empty
+						"lastEmptied": (level < 3) ? now : device.lastEmptied
 					}
 				},
 				function(err)
@@ -70,6 +80,7 @@ s.post("/reading", function(req, res)
 							errors.send(res, 500, "ERR_DEVICE_SAVE");
 						}
 						res.status(200).end();
+						// TODO: Send push notif if full or stagnant
 					}
 					catch(e)
 					{

@@ -2,8 +2,11 @@
 
 #include "etherShield.h"
 #include "ip_arp_udp_tcp.c"
-#define SYNACK_TIMEOUT 100
+#define SYNACK_TIMEOUT 5
+
 #define BUFFER_SIZE 700
+#define trigPin 7
+#define echoPin 6
 // You can get a token from GET /api/device/:id/token (or just open the device page on the app)
 // This token will not expire and will only become invalid if the server-side secrey key changes
 // For more convenient token refreshing, the token can be stored in an SD-card
@@ -41,6 +44,10 @@ static uint8_t capacity_sent;
 static uint8_t lingering = 0;
 
 static uint8_t buf[BUFFER_SIZE+1];
+
+static uint16_t level = 99; // Distance of sensor from water surface
+
+long duration, distance;
 
 EtherShield es = EtherShield();
 
@@ -90,9 +97,12 @@ void setup()
 
         // intialize varible;
         syn_ack_timeout =0;
-        client_data_ready = 1;
+        client_data_ready = 0;
         client_state = IDLE;
         capacity_sent = 0; // NOTE: This should actually default to 0
+        
+        pinMode(trigPin, OUTPUT);
+      pinMode(echoPin, INPUT);
 }
 
 void loop()
@@ -100,8 +110,17 @@ void loop()
 
         if(client_data_ready==0)
         {
-                delay(2000UL); // Delay by 2 seconds
+          digitalWrite(trigPin, LOW);  // Added this line
+          delayMicroseconds(2); // Added this line
+          digitalWrite(trigPin, HIGH);
+        //  delayMicroseconds(1000); - Removed this line
+          delayMicroseconds(10); // Added this line
+          digitalWrite(trigPin, LOW);
+          duration = pulseIn(echoPin, HIGH);
+          distance = (duration/2) / 29.1;
                 client_data_ready = 1;
+                
+          Serial.println(distance);
         }
 	client_process();
        
@@ -155,7 +174,12 @@ uint16_t readingRequest(uint8_t *buf ) // Create sensor reading report/request
 	// TODO: Replace all es.ES_fill_tcp_data_p() with es.ES_fill_tcp_data(), which takes good old char*
 	// TOOD: Water level should actually come from sensor
         
-	int level = random(0, 100);
+//	level -= 2;
+//        if (level <= 1)
+//        {
+//          level = random(1, 98);
+//        }
+        level = distance;
 	char levelStr[5 + 1]; // Up to five digits supported
 	itoa(level, levelStr, 10); // convert to string in base 10
 	int levelStrLen = 6 + strlen(levelStr); // `level=` is 6 chars long

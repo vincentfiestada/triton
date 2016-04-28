@@ -281,8 +281,9 @@ ctrls.controller("deviceCtrl", function($scope, $http, $rootScope, $mdToast, $st
 				$scope.labels.push(moment(res.data.readings[i].dateSent).fromNow());
 			}
 			console.log($scope.levels[0]);
-			// Check if stagnant
+			// Check if stagnant and/or full
 			$scope.isStagnant = false;
+			$scope.isFull = false;
 			var now = new Date();
 			var lastEmptied = new Date(res.data.lastEmptied);
 			var diff = now.getTime() - lastEmptied.getTime();
@@ -292,8 +293,13 @@ ctrls.controller("deviceCtrl", function($scope, $http, $rootScope, $mdToast, $st
 				$scope.isStagnant = true;
 				console.log("Stagnant");
 			}
+			$scope.percentage = 100 * $scope.levels[0][+$scope.levels[0].length - 1] / $scope.device.maxCapacity;
+			if ($scope.percentage >= 90)
+			{
+				$scope.isFull = true;
+			}
 			// Set timeout for next update 
-			var updateTask = $timeout($scope.getDevice, 2000);
+			var updateTask = $timeout($scope.getDevice, 4000);
 		},
 		function error(res)
 		{

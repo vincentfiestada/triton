@@ -1,11 +1,12 @@
 <md-card>
 	<md-card-content>
 		<h2 class="md-display-1 id-label">{{ device.nickname || "Device " + device._id }}</h2>
-		<p><b>Last Reading </b><span am-time-ago="device.lastReading"></span></p>
+		<p><b>Last Reading: </b>{{ levels[0][levels[0].length - 1] }} cm ({{ percentage }} %), <span am-time-ago="device.lastReading"></span></p>
 		<p><b>Last Emptied </b><span am-time-ago="device.lastEmptied"></span></p>
 		<p><b>Maximum Capacity: </b>{{ device.maxCapacity }} cm</p>
 		<p><md-icon md-svg-icon="{{ (device.receiveFrom) ? 'check-circle' : 'close-circle' }}"></md-icon>{{ (device.receiveFrom) ? "Receiving sensor readings" : "Readings from this device are not being recorded" }}</p>
 		<p ng-show="isStagnant"><md-icon md-svg-icon="alert-box"></md-icon>Stagnant</p>
+		<p ng-show="isFull"><md-icon md-svg-icon="alert-octagon"></md-icon>Container is Full ({{ percentage }} %)</p>
 		
 		<md-button class="md-raised md-primary" ng-click="settings()">
 			<md-icon md-svg-icon="settings"></md-icon>Configure

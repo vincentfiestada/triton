@@ -33,13 +33,14 @@ module.exports = mongoose.model("Device", new Schema(
 	"maxCapacity": // Max capacity of bucket this device is monitoring (in cm)
 	{
 		"type": Number,
-		"required": true	
+		"required": true,
+		"min": 5, // Minimum 5 cm high water container	
 	},
 	"lastReading": Date, // DateTime when last sensor reading was received from device
 	"lastEmptied": Date, // DateTime when the sensor last got an `empty bucket` reading
 	"readings": 
 	[{
-		"level":
+		"level": // Water height (in cm)
 		{
 			"type": Number,
 			"required": true,
