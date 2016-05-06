@@ -9,6 +9,10 @@ body, body > div[ui-view]
 {
 	background: #1565C0;
 }
+.card
+{
+	padding: 10px;
+}
 *, input
 {
 	font-family: sans-serif;

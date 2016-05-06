@@ -133,7 +133,7 @@ uint16_t testRequest(uint8_t *buf ) // Create test request
 	plen= es.ES_fill_tcp_data_p(buf,0, PSTR ( "GET /api/test" ) );
      
         
-	plen= es.ES_fill_tcp_data_p(buf, plen, PSTR ( " HTTP/1.0\r\n" ));
+	plen= es.ES_fill_tcp_data_p(buf, plen, PSTR ( " HTTP/1.1\r\n" ));
 	plen= es.ES_fill_tcp_data_p(buf, plen, PSTR ( "Host: 192.168.1.7\r\n" ));
 	plen= es.ES_fill_tcp_data_p(buf, plen, PSTR ( "User-Agent: AVR ethernet\r\n" ));
 	plen= es.ES_fill_tcp_data_p(buf, plen, PSTR ( "Keep-Alive: 300\r\n" ));
@@ -151,7 +151,7 @@ uint16_t capacityRequest(uint8_t *buf ) // Create capacity request
         
 	plen= es.ES_fill_tcp_data_p(buf,0, PSTR ( "PUT /api/sense/capacity" ) );
      
-	plen= es.ES_fill_tcp_data_p(buf, plen, PSTR ( " HTTP/1.0\r\n" ));
+	plen= es.ES_fill_tcp_data_p(buf, plen, PSTR ( " HTTP/1.1\r\n" ));
 	plen= es.ES_fill_tcp_data_p(buf, plen, PSTR ( "Host: 192.168.1.7\r\n" ));
 	plen= es.ES_fill_tcp_data_p(buf, plen, PSTR ( "User-Agent: AVR ethernet\r\n" ));
 	plen= es.ES_fill_tcp_data_p(buf, plen, PSTR ( "x-access-token: "));
@@ -188,7 +188,7 @@ uint16_t readingRequest(uint8_t *buf ) // Create sensor reading report/request
         
 	plen= es.ES_fill_tcp_data_p(buf,0, PSTR ( "POST /api/sense/reading" ) );
      
-	plen= es.ES_fill_tcp_data_p(buf, plen, PSTR ( " HTTP/1.0\r\n" ));
+	plen= es.ES_fill_tcp_data_p(buf, plen, PSTR ( " HTTP/1.1\r\n" ));
 	plen= es.ES_fill_tcp_data_p(buf, plen, PSTR ( "Host: 192.168.1.7\r\n" ));
 	plen= es.ES_fill_tcp_data_p(buf, plen, PSTR ( "User-Agent: AVR ethernet\r\n" ));
 	plen= es.ES_fill_tcp_data_p(buf, plen, PSTR ( "x-access-token: "));

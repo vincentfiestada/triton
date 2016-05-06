@@ -4,7 +4,7 @@
 
 module.exports =
 {
-	"DB_URL": process.env.database || "mongodb://localhost:27017/triton",
+	"DB_URL": process.env.database || "mongodb://127.0.0.1:27017/triton",
 	"STATIC_SEND_OPTS":
 	{
 		root: __dirname,

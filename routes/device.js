@@ -118,10 +118,14 @@ d.put("/", function(req, res)
 	{
 		try
 		{
-			if (err || !device)
+			if (err)
 			{
 				var errs = errors.extractMongo(err);
 				errors.sendVerbose(res, 400, "ERR_SAVE_DEVICE", errs);
+			}
+			else if (!device)
+			{
+				errors.send(res, 404, "ERR_DEVICE_NA");
 			}
 			else
 			{
@@ -158,10 +162,11 @@ d.get("/:id/", function(req, res)
 		{
 			if (err || !device)
 			{
-				errors.send(res, 500, "ERR_DB_DEVICE");
+				errors.send(res, 404, "ERR_DEVICE_NA");
 			}
 			else
 			{
+				res.setHeader("Access-Control-Allow-Origin", "*");
 				res.send(device);
 			}
 		}
@@ -216,7 +221,7 @@ d.get("/:id/token/", function(req, res)
 		{
 			if (err || !device)
 			{
-				errors.send(res, 500, "ERR_DB_DEVICE");
+				errors.send(res, 404, "ERR_DEVICE_NA");
 			}
 			else
 			{

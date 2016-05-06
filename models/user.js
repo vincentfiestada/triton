@@ -42,5 +42,4 @@ module.exports = mongoose.model("User", new Schema(
 		"lowercase": true, 
 		"match": [ email_regexp, "The email you provided was invalid." ] 
 	},
-	"devices": [Device]
 }));

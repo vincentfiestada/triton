@@ -100,7 +100,7 @@ u.post("/", function(req, res)
 
 u.use(verify); // Use auth token verification middleware
 /*
- * GET /api/user/me
+ * GET /api/user/
  *	- Returns information about the current logged-in user
  *	- Authorization token is required
  */
@@ -127,7 +127,7 @@ u.get("/", function(req, res)
 			{
 				// Red Flag: User not found despite verified auth token
 				console.log("<E> RED FLAG !!! An authenticated user account could not be found. Username: `%s`", req.vtoken.username);
-				errors.send(res, 404, "ERR_USER_DNE");
+				errors.send(res, 404, "ERR_USER_NA");
 			}
 			res.send(user);
 		}
